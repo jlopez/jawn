@@ -119,6 +119,14 @@ lazy val ast = project.in(file("ast"))
   .settings(jawnSettings: _*)
   .disablePlugins(JmhPlugin)
 
+lazy val convert = project.in(file("convert"))
+  .dependsOn(parser % "compile->compile;test->test")
+  .dependsOn(ast % "compile->compile;test->test")
+  .settings(name := "convert")
+  .settings(moduleName := "jawn-convert")
+  .settings(jawnSettings: _*)
+  .disablePlugins(JmhPlugin)
+
 def support(s: String) =
   Project(id = s, base = file(s"support/$s"))
     .settings(name := (s + "-support"))
